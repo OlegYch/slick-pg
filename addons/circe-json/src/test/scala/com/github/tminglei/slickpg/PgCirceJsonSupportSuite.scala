@@ -23,7 +23,7 @@ class PgCirceJsonSupportSuite extends AnyFunSuite with PostgresContainer {
     val plainAPI = new API with CirceJsonPlainImplicits
 
     ///
-    trait API extends JdbcAPI with JsonImplicits {
+    trait API extends PostgresAPI with JsonImplicits {
       implicit val strListTypeMapper: DriverJdbcType[List[String]] = new SimpleArrayJdbcType[String]("text").to(_.toList)
     }
   }

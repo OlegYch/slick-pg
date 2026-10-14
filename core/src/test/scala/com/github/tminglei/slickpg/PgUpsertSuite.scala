@@ -11,8 +11,10 @@ class PgUpsertSuite extends AnyFunSuite with PostgresContainer {
 
   object MyPostgresProfile extends ExPostgresProfile {
     // Add back `capabilities.insertOrUpdate` to enable native `upsert` support
-    override protected def computeCapabilities: Set[Capability] =
-      super.computeCapabilities + JdbcCapabilities.insertOrUpdate
+    override val api: MyExtPostgresAPI = new MyExtPostgresAPI {}
+    trait MyExtPostgresAPI extends ExtPostgresAPI {
+      override implicit val insertOrUpdate = register(JdbcCapabilities.insertOrUpdate)
+    }
   }
 
   ///---

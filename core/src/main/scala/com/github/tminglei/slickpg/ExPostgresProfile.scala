@@ -42,7 +42,7 @@ trait ExPostgresProfile extends JdbcProfile with PostgresProfile with Logging { 
   override val api: ExtPostgresAPI = new ExtPostgresAPI {}
 
   ///--
-  trait ExtPostgresAPI extends JdbcAPI {
+  trait ExtPostgresAPI extends PostgresAPI {
     type InheritingTable = driver.InheritingTable
 
     val Over = window.Over()
@@ -139,8 +139,8 @@ trait ExPostgresProfile extends JdbcProfile with PostgresProfile with Logging { 
     extends CountingInsertActionComposerImpl[U](compiled) {
 
     /** Upsert a batch of records - insert rows whose primary key is not present in
-      * the table, and update rows whose primary key is present.. */
-    def insertOrUpdateAll(values: Iterable[U]): ProfileAction[MultiInsertResult, NoStream, Effect.Write] =
+     * the table, and update rows whose primary key is present.. */
+    override def insertOrUpdateAll(values: Iterable[U], rowsPerStatement: slick.jdbc.RowsPerStatement)(implicit cap: slick.basic.Capability.ForProfile[driver.type, slick.jdbc.JdbcCapabilities.insertOrUpdate.type]): ProfileAction[MultiInsertResult, NoStream, Effect.Write] =
       if (useNativeUpsert)
         new MultiInsertOrUpdateAction(values)
       else throw new IllegalStateException("Cannot insertOrUpdateAll in without native upsert capability. " +

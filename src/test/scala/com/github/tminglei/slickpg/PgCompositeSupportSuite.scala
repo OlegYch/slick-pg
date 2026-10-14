@@ -69,7 +69,7 @@ object PgCompositeSupportSuite {
       .asInstanceOf[java.util.Map[String, String]]).asScala.toMap
 
     ///
-    trait API extends JdbcAPI with ArrayImplicits {
+    trait API extends PostgresAPI with ArrayImplicits {
       registerTypeConverters()
       //-- Scala 3: register() uses implicit resolution and cannot be called here under Scala 3;
       //-- WeekDay converters are registered via ScalaVersionShim (version-specific source trees)

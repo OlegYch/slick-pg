@@ -35,7 +35,7 @@ class PgPlayJsonSupportSuite extends AnyFunSuite with PostgresContainer {
     val plainAPI = new API with PlayJsonPlainImplicits
 
     ///
-    trait API extends JdbcAPI with JsonImplicits {
+    trait API extends PostgresAPI with JsonImplicits {
       implicit val strListTypeMapper: DriverJdbcType[List[String]] = new SimpleArrayJdbcType[String]("text").to(_.toList)
       implicit val beanJsonTypeMapper: JdbcType[JBean] with BaseTypedType[JBean] = MappedJdbcType.base[JBean, JsValue](Json.toJson(_), _.as[JBean])
       implicit val jsonArrayTypeMapper: DriverJdbcType[List[JsValue]] =

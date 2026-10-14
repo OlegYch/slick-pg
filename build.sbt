@@ -1,6 +1,6 @@
 val scala212 = "2.12.21"
 val scala213 = "2.13.18"
-val scala3 = "3.8.3"
+val scala3 = "3.9.0"
 
 lazy val commonSettings = Seq(
   organizationName := "slick-pg",
@@ -49,11 +49,13 @@ lazy val commonSettings = Seq(
 def mainDependencies(scalaVersion: String) = {
   val isScala3 = scalaVersion.startsWith("3")
 
+//  val slickVersion = "4.0.0-RC1"
+  val slickVersion = "4.0.0-pre.38.88951688"
   Seq (
     "org.scala-lang.modules" %% "scala-parser-combinators" % (if (isScala3) "2.3.0" else "1.1.2"),
     "dev.zio" %% "izumi-reflect" % "3.0.9",
-    "com.typesafe.slick" %% "slick" % "4.0.0-RC1",
-    "com.typesafe.slick" %% "slick-future" % "4.0.0-RC1",
+    "com.typesafe.slick" %% "slick" % slickVersion,
+    "com.typesafe.slick" %% "slick-future" % slickVersion,
     "org.typelevel" %% "cats-effect" % "3.6.1",
     "co.fs2" %% "fs2-core" % "3.12.0",
     "org.postgresql" % "postgresql" % "42.7.13",

@@ -24,7 +24,7 @@ class PgJson4sSupportSuite extends AnyFunSuite with PostgresContainer {
     val plainAPI = new API with Json4sJsonPlainImplicits
 
     ///
-    trait API extends JdbcAPI with JsonImplicits {
+    trait API extends PostgresAPI with JsonImplicits {
       implicit val strListTypeMapper: DriverJdbcType[List[String]] = new SimpleArrayJdbcType[String]("text").to(_.toList)
       implicit val json4sJsonArrayTypeMapper: DriverJdbcType[List[JValue]] =
         new AdvancedArrayJdbcType[JValue](pgjson,

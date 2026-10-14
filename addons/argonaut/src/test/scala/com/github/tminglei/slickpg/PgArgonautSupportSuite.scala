@@ -22,7 +22,7 @@ class PgArgonautSupportSuite extends AnyFunSuite with PostgresContainer {
     val plainAPI = new API with ArgonautJsonPlainImplicits
 
     ///
-    trait API extends JdbcAPI with JsonImplicits {
+    trait API extends PostgresAPI with JsonImplicits {
       implicit val strListTypeMapper: DriverJdbcType[List[JsonField]] = new SimpleArrayJdbcType[String]("text").to(_.toList)
     }
   }
